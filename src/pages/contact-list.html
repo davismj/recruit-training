@@ -1,5 +1,7 @@
 <template>
   <section id="contact-list-page">
-    Contact list
+    <ul class="list-group col-md-4">
+      <li class="list-group-item" repeat.for="contact of contactService.contacts">${contact.name}</li>
+    </ul>
   </section>
 </template>
