@@ -22,8 +22,8 @@ const methods = {
     'api/contacts/(\\d+)': (id) => contacts.find(c => c.id == id)
   },
   'post': {
-    'api/contacts': ({ id, name, email, phone }) => {
-      let contact = contacts.find((contact) => contact.id == id);
+    'api/contacts': ({ id: contactId, name, email, phone }) => {
+      let contact = contacts.find((contact) => contact.id == contactId);
       if (!contact) {
         contact = { id: id++, name, email, phone }
         contacts.push(contact);
