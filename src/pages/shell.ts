@@ -9,7 +9,8 @@ export class ShellViewModel {
     this.router = router;
     config.map([
       { route: '', redirect: 'contact' },
-      { route: 'contact', moduleId: PLATFORM.moduleName('pages/contact-list'), name: 'contact-list', title: 'Contacts', nav: true }
+      { route: 'contact', moduleId: PLATFORM.moduleName('pages/contact-list'), name: 'contact-list', title: 'Contacts', nav: true },
+      { route: 'contact/:id', moduleId: PLATFORM.moduleName('pages/contact-list'), name: 'contact-detail' },
     ]);
   }
 }

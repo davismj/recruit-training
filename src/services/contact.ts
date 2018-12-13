@@ -16,4 +16,14 @@ export class ContactService {
     this.contacts.splice(0, Infinity, ...contacts);
     return this.contacts;
   }
+
+  async getContact(id: number | string): Promise<IContact> {
+    const response = await this.http.get(`api/contacts/${id}`);
+    return await response.json();
+  }
+
+  async saveContact(contact: IContact) {
+    const response = await this.http.post('api/contacts', contact);
+    return await response.json();
+  }
 }

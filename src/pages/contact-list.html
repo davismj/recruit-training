@@ -1,7 +1,29 @@
 <template>
-  <section id="contact-list-page">
-    <ul class="list-group col-md-4">
-      <li class="list-group-item" repeat.for="contact of contactService.contacts">${contact.name}</li>
-    </ul>
+  <section id="contact-list-page" class="row">
+    <div class="list-group col-md-4">
+      <a repeat.for="contact of contactService.contacts"
+         class="list-group-item ${contact.id === $parent.contact.id ? 'active' : ''}"
+         route-href="route: contact-detail; params.bind: { id: contact.id }">
+        ${contact.name}
+      </a>
+    </div>
+    <form class="col-md-8" if.bind="contact" submit.delegate="save()">
+      <label class="form-group">
+        <span>Name</span>
+        <input class="form-control" type="text" value.bind="contact.name" />
+      </label>
+      <label class="form-group">
+        <span>Phone Number</span>
+        <input class="form-control" type="text" value.bind="contact.phone" />
+      </label>
+      <label class="form-group">
+        <span>Email Address</span>
+        <input class="form-control" type="text" value.bind="contact.email" />
+      </label>
+      <div class="d-flex">
+        <a class="btn btn-default ml-auto" route-href="contact-list">Cancel</a>
+        <button class="btn btn-primary" type="submit">Save</button>
+      </div>
+    </form>
   </section>
 </template>
