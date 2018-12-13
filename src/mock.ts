@@ -23,10 +23,12 @@ const methods = {
   },
   'post': {
     'api/contacts': ({ id, name, email, phone }) => {
-      const contact = { id, name, email, phone };
-      if (!contact.id) {
-        contact.id = id++;
+      let contact = contacts.find((contact) => contact.id == id);
+      if (!contact) {
+        contact = { id: id++, name, email, phone }
         contacts.push(contact);
+      } else {
+        Object.assign(contact, { name, email, phone })
       }
       return contact;
     }
