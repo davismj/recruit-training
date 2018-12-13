@@ -26,4 +26,12 @@ export class ContactService {
     const response = await this.http.post('api/contacts', contact);
     return await response.json();
   }
+
+  async deleteContact({ id }: IContact) {
+    const index = this.contacts.findIndex((contact) => contact.id == id);
+    if (index > -1) {
+      this.contacts.splice(index, 1);
+    }
+    await this.http.delete(`api/contacts/${id}`);
+  }
 }

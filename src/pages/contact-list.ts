@@ -13,7 +13,9 @@ export class ContactListViewModel {
     private router: Router) { }
 
   async canActivate({ id }) {
-    if (id) {
+    if (id === 'new') {
+      this.contact = { id: null, name: '', phone: '', email: '' };
+    } else if (id) {
       const contact = await this.contactService.getContact(id);
       if (contact) {
         const { id, name, phone, email } = contact;
@@ -35,5 +37,12 @@ export class ContactListViewModel {
     const { id, name, phone, email } = this.contact;
     this.contactService.saveContact({ id, name, phone, email });
     this.router.navigateToRoute('contact-list');
+  }
+
+  remove(contact: IContact) {
+    this.contactService.deleteContact(contact);
+    if (this.contact.id == contact.id) {
+      this.router.navigateToRoute('contact-list');
+    }
   }
 }

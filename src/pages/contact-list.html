@@ -2,10 +2,17 @@
   <section id="contact-list-page" class="row">
     <div class="list-group col-md-4">
       <a repeat.for="contact of contactService.contacts"
-         class="list-group-item ${contact.id === $parent.contact.id ? 'active' : ''}"
+         class="list-group-item ${contact.id === $parent.contact.id ? 'active' : ''} d-flex"
          route-href="route: contact-detail; params.bind: { id: contact.id }">
         ${contact.name}
+        <button type="button" class="btn btn-sm btn-danger ml-auto" click.delegate="remove(contact)">
+          <span>&times;</span>
+        </button>
       </a>
+      <a class="list-group-item bg-success text-white"
+         route-href="route: contact-detail; params.bind: { id: 'new' }">
+         Add new Contact
+       </a>
     </div>
     <form class="col-md-8" if.bind="contact" submit.delegate="save()">
       <label class="form-group">
