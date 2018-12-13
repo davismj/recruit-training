@@ -3,6 +3,7 @@ import environment from './environment';
 import {PLATFORM} from 'aurelia-pal';
 import { MockHttpClient } from './mock';
 import { HttpClient } from 'aurelia-fetch-client';
+import 'main.scss';
 
 export function configure(aurelia: Aurelia) {
   aurelia.use
