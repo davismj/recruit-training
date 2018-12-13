@@ -1,5 +1,5 @@
 import { inject } from 'aurelia-framework';
-import { Router } from 'aurelia-router';
+import { Router, Redirect } from 'aurelia-router';
 import { ContactService } from 'services/contact';
 import { IContact } from 'models/contact';
 
@@ -12,17 +12,23 @@ export class ContactListViewModel {
     private contactService: ContactService,
     private router: Router) { }
 
-  async activate({ id }) {
-    const [contacts, contact] = await Promise.all([
-      this.contactService.getAllContacts(),
-      id ? this.contactService.getContact(id) : null
-    ]);
-    if (contact) {
-      const { id, name, phone, email } = contact;
-      this.contact = { id, name, phone, email };
+  async canActivate({ id }) {
+    if (id) {
+      const contact = await this.contactService.getContact(id);
+      if (contact) {
+        const { id, name, phone, email } = contact;
+        this.contact = { id, name, phone, email };
+      } else {
+        return new Redirect('contact')
+      }
     } else {
       this.contact = null;
     }
+    return true;
+  }
+
+  async activate() {
+    await this.contactService.getAllContacts();
   }
 
   save() {
