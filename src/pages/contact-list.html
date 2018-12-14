@@ -18,28 +18,28 @@
       <div class="alert alert-danger" role="alert" if.bind="validation.errors.length">
         <p>${'validation.PLEASE_CORRECT_THE_FOLLOWING_ERRORS' & t}:</p>
         <ul>
-          <li repeat.for="error of validation.errors">${error.message}</li>
+          <li repeat.for="error of validation.errors">${error.message & t: { $value: error.object[error.propertyName] }}</li>
         </ul>
       </div>
       <label class="form-group" validation-errors.bind="nameErrors">
         <span>${'contact.NAME' & t}</span>
         <input class="form-control ${!nameErrors.length ? '' : 'is-invalid'}" type="text" value.bind="contact.name & validate" />
         <div class="invalid-feedback" if.bind="nameErrors.length">
-          <p repeat.for="info of nameErrors">${info.error.message}</p>
+          <p repeat.for="info of nameErrors">${info.error.message & t}</p>
         </div>
       </label>
       <label class="form-group" validation-errors.bind="phoneErrors">
         <span>${'contact.PHONE_NUMBER' & t}</span>
         <input class="form-control ${!phoneErrors.length ? '' : 'is-invalid'}" type="text" value.bind="contact.phone & validate" />
         <div class="invalid-feedback" if.bind="phoneErrors.length">
-          <p repeat.for="info of phoneErrors">${info.error.message}</p>
+          <p repeat.for="info of phoneErrors">${info.error.message & t}</p>
         </div>
       </label>
       <label class="form-group" validation-errors.bind="emailErrors">
         <span>${'contact.EMAIL_ADDRESS' & t}</span>
         <input class="form-control ${!emailErrors.length ? '' : 'is-invalid'}" type="text" value.bind="contact.email & validate" />
         <div class="invalid-feedback" if.bind="emailErrors.length">
-          <p repeat.for="info of emailErrors">${info.error.message}</p>
+          <p repeat.for="info of emailErrors">${error.message & t: { $value: error.object[error.propertyName] }}</p>
         </div>
       </label>
       <div class="d-flex">
