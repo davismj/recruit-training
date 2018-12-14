@@ -2,17 +2,20 @@ let id = 0;
 const c1 = {
   id: id++,
   name: 'Matthew James Davis',
-  email: 'matt.davis@aurelia.io'
+  email: 'matt.davis@aurelia.io',
+  birthday: null
 };
 const c2 = {
   id: id++,
   name: 'John Doe',
-  email: 'email@example.com'
+  email: 'email@example.com',
+  birthday: null
 };
 const c3 = {
   id: id++,
   name: 'Yamada Taro',
-  phone: '090-0000-0000'
+  phone: '090-0000-0000',
+  birthday: null
 };
 const contacts = [c1, c2, c3];
 
@@ -22,13 +25,13 @@ const methods = {
     'api/contacts/(\\d+)': (id) => contacts.find(c => c.id == id)
   },
   'post': {
-    'api/contacts': ({ id: contactId, name, email, phone }) => {
-      let contact = contacts.find((contact) => contact.id == contactId);
+    'api/contacts': (obj) => {
+      let contact = contacts.find((contact) => contact.id == obj.id);
       if (!contact) {
-        contact = { id: id++, name, email, phone }
+        contact = Object.assign({}, obj, { id: id++ });
         contacts.push(contact);
       } else {
-        Object.assign(contact, { name, email, phone })
+        Object.assign(contact, obj, { id: contact.id })
       }
       return contact;
     }
