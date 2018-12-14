@@ -1,3 +1,19 @@
 {
-
+  "shell": {
+    "CONTACT_MANAGER": "コンタクトセンター",
+    "CONTACT_LIST": "コンタクトリスト"
+  },
+  "contact-list": {
+    "ADD_NEW_CONTACT": "新しい連絡先を追加",
+    "CANCEL": "キャンセル",
+    "SAVE": "保存"
+  },
+  "validation": {
+    "PLEASE_CORRECT_THE_FOLLOWING_ERRORS": "以下のエラーを修正してください"
+  },
+  "contact": {
+    "NAME": "名前",
+    "PHONE_NUMBER": "電話番号",
+    "EMAIL_ADDRESS": "電子メールアドレス"
+  }
 }

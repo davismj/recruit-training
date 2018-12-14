@@ -1,12 +1,18 @@
 <template>
   <section id="shell-page">
     <nav class="navbar row navbar-light bg-light mb-4">
-      <a class="navbar-brand">Contact Manager</a>
+      <a class="navbar-brand">${'shell.CONTACT_MANAGER' & t}</a>
       <ul class="navbar-nav mr-auto">
         <li repeat.for="route of router.navigation" class="nav-item ${route.isActive ? 'active' : ''}">
-          <a class="nav-link" href.bind="route.href">${route.title}</a>
+          <a class="nav-link" href.bind="route.href">${route.title & t}</a>
         </li>
       </ul>
+      <form class="form-inline">
+        <select class="form-control" value.bind="locale" change.delegate="updateLocale()">
+          <option value="jp-JP">日本語</option>
+          <option value="en-US">English</option>
+        </select>
+      </form>
     </nav>
   </section>
   <router-view></router-view>
