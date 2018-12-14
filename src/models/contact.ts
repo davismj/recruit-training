@@ -36,9 +36,6 @@ ValidationRules
     // .when((contact: IContact) => !contact.phone)
     //   .required()
   .ensureObject()
-    .satisfies((contact: IContact) => {
-      console.log('checked!')
-      return !!contact.phone || !!contact.email
-    })
+    .satisfies((contact: IContact) => !!contact.phone || !!contact.email)
     .withMessage('You must provide either a phone number or an email address.')
   .on(Contact);
