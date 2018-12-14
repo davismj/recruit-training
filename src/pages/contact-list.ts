@@ -29,19 +29,15 @@ export class ContactListViewModel {
     } else {
       this.contact = null;
     }
+    if (this.contact) {
+      this.validation = this.validationFactory.createForCurrentScope();
+      this.validation.addObject(this.contact);
+    }
     return true;
   }
 
   async activate() {
     await this.contactService.getAllContacts();
-    if (this.contact) {
-      this.validation = this.validationFactory.createForCurrentScope();
-      this.validation.addObject(this.contact);
-    }
-  }
-
-  deactivate() {
-    this.validation = null;
   }
 
   async save() {
