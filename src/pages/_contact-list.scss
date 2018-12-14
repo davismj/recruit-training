@@ -1,5 +1,10 @@
 #contact-list-page {
   label.form-group {
     display: block;
+
+    > span {
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
   }
 }
