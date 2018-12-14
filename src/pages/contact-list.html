@@ -12,33 +12,39 @@
       <a class="list-group-item bg-success text-white"
          route-href="route: contact-detail; params.bind: { id: 'new' }">
          Add new Contact
-       </a>
+      </a>
     </div>
-    <form class="col-md-8" if.bind="contact" submit.delegate="save()">
-      <label class="form-group">
+    <form class="col-md-8" if.bind="contact" submit.delegate="save()" change.delegate="validation.revalidateErrors()">
+      <div class="alert alert-danger" role="alert" if.bind="validation.errors.length">
+        <p>Please correct the following errors:</p>
+        <ul>
+          <li repeat.for="error of validation.errors">${error.message}</li>
+        </ul>
+      </div>
+      <label class="form-group" validation-errors.bind="nameErrors">
         <span>Name</span>
-        <input class="form-control ${contact.name ? '' : 'is-invalid'}" type="text" value.bind="contact.name" />
-        <div class="invalid-feedback" if.bind="!contact.name">
-          Your name is required.
+        <input class="form-control ${!nameErrors.length ? '' : 'is-invalid'}" type="text" value.bind="contact.name & validate" />
+        <div class="invalid-feedback" if.bind="nameErrors.length">
+          <p repeat.for="info of nameErrors">${info.error.message}</p>
         </div>
       </label>
-      <label class="form-group">
+      <label class="form-group" validation-errors.bind="phoneErrors">
         <span>Phone Number</span>
-        <input class="form-control ${isPhoneNumber(contact.phone) ? '' : 'is-invalid'}" type="text" value.bind="contact.phone" />
-        <div class="invalid-feedback" if.bind="!isPhoneNumber(contact.phone)">
-          Your phone number should be in the format 000-0000-0000.
+        <input class="form-control ${!phoneErrors.length ? '' : 'is-invalid'}" type="text" value.bind="contact.phone & validate" />
+        <div class="invalid-feedback" if.bind="phoneErrors.length">
+          <p repeat.for="info of phoneErrors">${info.error.message}</p>
         </div>
       </label>
-      <label class="form-group">
+      <label class="form-group" validation-errors.bind="emailErrors">
         <span>Email Address</span>
-        <input class="form-control ${isEmail(contact.email) ? '' : 'is-invalid'}" type="text" value.bind="contact.email" />
-        <div class="invalid-feedback" if.bind="!isEmail(contact.email)">
-          Your email is invalid.
+        <input class="form-control ${!emailErrors.length ? '' : 'is-invalid'}" type="text" value.bind="contact.email & validate" />
+        <div class="invalid-feedback" if.bind="emailErrors.length">
+          <p repeat.for="info of emailErrors">${info.error.message}</p>
         </div>
       </label>
       <div class="d-flex">
         <a class="btn btn-default ml-auto" route-href="contact-list">Cancel</a>
-        <button class="btn btn-primary" type="submit" disabled.bind="!isValid">Save</button>
+        <button class="btn btn-primary" type="submit" disabled.bind="validation.errors.length">Save</button>
       </div>
     </form>
   </section>
