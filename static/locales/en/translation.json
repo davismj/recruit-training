@@ -14,6 +14,7 @@
     "NAME": "Name",
     "PHONE_NUMBER": "Phone Number",
     "EMAIL_ADDRESS": "Email Address",
+    "BIRTHDAY": "Birthday",
     "YOUR_PHONE_NUMBER_SHOULD_BE_IN_THE_FORMAT": "Your phone number should be in the format 000-0000-0000",
     "NOT_A_VALID_EMAIL_ADDRESS": "\"{{ $value }}\" is not a valid email address",
     "MUST_PROVIDE_PHONE_OR_EMAIL": "You must provide either a phone number or an email address"

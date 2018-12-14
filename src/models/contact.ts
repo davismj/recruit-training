@@ -4,7 +4,8 @@ export interface IContact {
   id: number,
   name: string,
   email?: string,
-  phone?: string
+  phone?: string,
+  birthday?: Date
 }
 
 export class Contact implements IContact {
@@ -12,9 +13,10 @@ export class Contact implements IContact {
   name: string;
   email?: string;
   phone?: string;
+  birthday?: Date;
 
-  constructor({ id, name, email, phone }: IContact) {
-    Object.assign(this, { id, name, email, phone });
+  constructor({ id, name, email, phone, birthday }: IContact) {
+    Object.assign(this, { id, name, email, phone, birthday });
   }
 }
 
@@ -36,6 +38,8 @@ ValidationRules
     .withMessage('contact.NOT_A_VALID_EMAIL_ADDRESS')
     // .when((contact: IContact) => !contact.phone)
     //   .required()
+  .ensure((contact: IContact) => contact.birthday)
+    .satisfies((bd) => !bd || bd instanceof Date)
   .ensureObject()
     .satisfies((contact: IContact) => !!contact.phone || !!contact.email)
     .withMessage('contact.MUST_PROVIDE_PHONE_OR_EMAIL')

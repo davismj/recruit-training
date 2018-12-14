@@ -17,12 +17,12 @@ export class ContactListViewModel {
 
   async canActivate({ id }) {
     if (id === 'new') {
-      this.contact = new Contact({ id: null, name: '', phone: '', email: '' });
+      this.contact = new Contact({ id: null, name: '', phone: '', email: '', birthday: null });
     } else if (id) {
       const contact = await this.contactService.getContact(id);
       if (contact) {
-        const { id, name, phone, email } = contact;
-        this.contact = new Contact({ id, name, phone, email });
+        const { id, name, phone, email, birthday } = contact;
+        this.contact = new Contact({ id, name, phone, email, birthday });
       } else {
         return new Redirect('contact')
       }
@@ -43,8 +43,8 @@ export class ContactListViewModel {
   async save() {
     const { valid } = await this.validation.validate();
     if (valid) {
-      const { id, name, phone, email } = this.contact;
-      this.contactService.saveContact({ id, name, phone, email });
+      const { id, name, phone, email, birthday } = this.contact;
+      this.contactService.saveContact({ id, name, phone, email, birthday });
       this.router.navigateToRoute('contact-list');
     }
   }

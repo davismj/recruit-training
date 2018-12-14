@@ -1,5 +1,7 @@
-import {FrameworkConfiguration} from 'aurelia-framework';
+import { PLATFORM, FrameworkConfiguration } from 'aurelia-framework';
 
 export function configure(config: FrameworkConfiguration) {
-  //config.globalResources([]);
+  config.globalResources([
+    PLATFORM.moduleName('./value-converters/date')
+  ]);
 }
