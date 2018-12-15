@@ -1,10 +1,10 @@
-// import { valueConverter } from 'aurelia-framework';
+import { valueConverter } from 'aurelia-framework';
 
 const parse = function parse(str: string): number {
   return str ? Number(str) : NaN
 }
 
-// @valueConverter('number')
+@valueConverter('number')
 export class NumberValueConverter {
   fromView(str: string | any): number | string {
     if (typeof(str) !== 'string') {
@@ -15,7 +15,7 @@ export class NumberValueConverter {
   }
 }
 
-// @valueConverter('digits')
+@valueConverter('digits')
 export class DigitsValueConverter extends NumberValueConverter {
   toView(val: any, digits: number = 0): string {
     let num = val;
