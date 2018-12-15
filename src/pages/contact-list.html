@@ -42,12 +42,15 @@
           <p repeat.for="info of emailErrors">${error.message & t: { $value: error.object[error.propertyName] }}</p>
         </div>
       </label>
-      <collapse heading="${'contact-list.PERSONAL_INFORMATION' & t}">
-        <label class="form-group" validation-errors.bind="bdErrors">
-          <span>${'contact.BIRTHDAY' & t}</span>
-          <input class="form-control ${!bdErrors.length ? '' : 'is-invalid'}" type="date" value.bind="contact.birthday | date & validate" />
-        </label>
-      </collapse>
+      <collapse-group>
+        <collapse heading="${'contact-list.PERSONAL_INFORMATION' & t}">
+          <label class="form-group" validation-errors.bind="bdErrors">
+            <span>${'contact.BIRTHDAY' & t}</span>
+            <input class="form-control ${!bdErrors.length ? '' : 'is-invalid'}" type="date" value.bind="contact.birthday | date & validate" />
+          </label>
+        </collapse>
+        <collapse heading="${'contact-list.OTHER_INFORMATION' & t}"></collapse>
+      </collapse-group>
       <div class="d-flex mt-2">
         <a class="btn btn-default ml-auto" route-href="contact-list">${'contact-list.CANCEL' & t}</a>
         <button class="btn btn-primary" type="submit" disabled.bind="validation.errors.length">${'contact-list.SAVE' & t}</button>
