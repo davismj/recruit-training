@@ -1,0 +1,68 @@
+.collapse-element {
+  display: block;
+  overflow-y: hidden;
+  transition: height 250ms ease-in-out;
+
+  .header {
+    display: flex;
+    cursor: pointer;
+  }
+
+  .heading {
+    flex: 1;
+  }
+
+  .icon {
+    display: flex;
+    position: relative;
+    height: 1em;
+    width: 1em;
+    align-items: center;
+    justify-content: center;
+    transform: none;
+    transition: transform 250ms;
+  }
+
+  .icon .vertical-bar {
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background: black;
+    opacity: 1;
+    transition: opacity 250ms;
+  }
+
+  .icon .horizontal-bar {
+    display: block;
+    position: absolute;
+    height: 1px;
+    width: 100%;
+    background: black;
+  }
+}
+
+.collapse-element.expanded {
+
+  .icon {
+    transform: rotate(180deg);
+  }
+
+  .vertical-bar {
+    opacity: 0;
+  }
+}
+
+.card-header .icon {
+  height: 24px;
+  width: 24px;
+  padding: 2px;
+
+  .vertical-bar {
+    height: 20px;
+  }
+
+  .horizontal-bar {
+    width: 20px;
+  }
+}

@@ -1,9 +1,12 @@
 {
   "shell": {
-    "CONTACT_LIST": "Contact List"
+    "CONTACT_LIST": "Contact List",
+    "CONTACT_MANAGER": "Contact Manager"
   },
   "contact-list": {
     "ADD_NEW_CONTACT": "Add new contact",
+    "PERSONAL_INFORMATION": "Personal Information",
+    "OTHER_INFORMATION": "Other Information",
     "CANCEL": "Cancel",
     "SAVE": "Save"
   },

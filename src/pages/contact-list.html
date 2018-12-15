@@ -2,14 +2,14 @@
   <section id="contact-list-page" class="row">
     <div class="list-group col-md-4">
       <a repeat.for="contact of contactService.contacts"
-         class="list-group-item ${contact.id === $parent.contact.id ? 'active' : ''} d-flex"
+         class="list-group-item list-group-item-action ${contact.id === $parent.contact.id ? 'active' : ''} d-flex"
          route-href="route: contact-detail; params.bind: { id: contact.id }">
         ${contact.name}
         <button type="button" class="btn btn-sm btn-danger ml-auto" click.delegate="remove(contact)">
           <span>&times;</span>
         </button>
       </a>
-      <a class="list-group-item bg-success text-white"
+      <a class="list-group-item list-group-item-action list-group-item-success"
          route-href="route: contact-detail; params.bind: { id: 'new' }">
         ${'contact-list.ADD_NEW_CONTACT' & t}
       </a>
@@ -42,11 +42,13 @@
           <p repeat.for="info of emailErrors">${error.message & t: { $value: error.object[error.propertyName] }}</p>
         </div>
       </label>
-      <label class="form-group" validation-errors.bind="bdErrors">
-        <span>${'contact.BIRTHDAY' & t}</span>
-        <input class="form-control ${!bdErrors.length ? '' : 'is-invalid'}" type="date" value.bind="contact.birthday | date & validate" />
-      </label>
-      <div class="d-flex">
+      <collapse heading="${'contact-list.PERSONAL_INFORMATION' & t}">
+        <label class="form-group" validation-errors.bind="bdErrors">
+          <span>${'contact.BIRTHDAY' & t}</span>
+          <input class="form-control ${!bdErrors.length ? '' : 'is-invalid'}" type="date" value.bind="contact.birthday | date & validate" />
+        </label>
+      </collapse>
+      <div class="d-flex mt-2">
         <a class="btn btn-default ml-auto" route-href="contact-list">${'contact-list.CANCEL' & t}</a>
         <button class="btn btn-primary" type="submit" disabled.bind="validation.errors.length">${'contact-list.SAVE' & t}</button>
       </div>

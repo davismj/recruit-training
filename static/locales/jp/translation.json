@@ -5,6 +5,8 @@
   },
   "contact-list": {
     "ADD_NEW_CONTACT": "新しい連絡先を追加",
+    "PERSONAL_INFORMATION": "個人情報",
+    "OTHER_INFORMATION": "他の情報",
     "CANCEL": "キャンセル",
     "SAVE": "保存"
   },
