@@ -40,7 +40,10 @@ export class ContactListViewModel {
   }
 
   async activate() {
-    await this.contactService.getAllContacts();
+    const promise = this.contactService.getAllContacts();
+    if (!this.contactService.contacts.length) {
+      await promise;
+    }
   }
 
   async save() {
