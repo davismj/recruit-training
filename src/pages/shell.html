@@ -7,13 +7,15 @@
           <a class="nav-link" href.bind="route.href">${route.title & t}</a>
         </li>
       </ul>
-      <form class="form-inline">
+      <form class="form-inline mr-2">
         <select class="form-control" value.bind="locale" change.delegate="updateLocale()">
           <option value="jp-JP">日本語</option>
           <option value="en-US">English</option>
         </select>
       </form>
+      <notification-list></notification-list>
     </nav>
   </section>
   <router-view></router-view>
+  <notifications class="bottom-right-fixed-notifications"></notifications>
 </template>

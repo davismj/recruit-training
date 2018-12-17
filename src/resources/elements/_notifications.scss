@@ -1,0 +1,91 @@
+.notifications-element {
+  display: flex;
+  flex-direction: column-reverse;
+
+  .notification {
+    display: block;
+    position: relative;
+    height: 10vh;
+    width: 20vw;
+    padding: 1rem;
+    font-size: 1.2rem;
+    animation: 0.25s linear forwards reverse fade-out, 1s linear 3s forwards fade-out, 0.25s ease-in-out 4s forwards collapse;
+
+    &:not(:hover) {
+      animation: 1s linear 3s forwards fade-out, 0.25s ease-in-out 4s forwards collapse;
+    }
+
+    &.dismissed {
+      animation: 0.5s linear forwards fade-out, 0.25s ease-in-out 0.5s forwards collapse;
+    }
+
+    &:not(.dismissed):hover {
+      animation: none;
+    }
+
+    &.info {
+      background: rgb(255,255,255);
+      border: 1px solid rgb(32,32,32);
+    }
+
+    &.success {
+      background: hsl(128, 50%, 50%);
+      color: white;
+    }
+
+    &.error {
+      background: hsl(0, 50%, 50%);
+      color: white;
+    }
+
+    + .notification {
+      margin-bottom: 1vh;
+    }
+  }
+
+  .dismiss-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    height: 1rem;
+    width: 1rem;
+    cursor: pointer;
+
+    > .bl-tr,
+    > .tl-br {
+      position: absolute;
+      left: calc(0.5rem - 1px);
+      height: 1rem;
+      width: 2px;
+      background: currentColor;
+    }
+
+    > .bl-tr {
+      transform: rotate(45deg);
+    }
+    > .tl-br {
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes collapse {
+  from {
+    height: 10vh;
+  }
+  to {
+    height: 0;
+    padding: 0;
+    margin: 0;
+  }
+}
+

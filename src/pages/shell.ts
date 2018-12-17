@@ -1,15 +1,18 @@
 import { inject, PLATFORM } from 'aurelia-framework';
 import { RouterConfiguration, Router } from 'aurelia-router';
 import { I18N } from 'aurelia-i18n';
+import { NotificationService } from 'services/notification';
 
-@inject(I18N)
+@inject(I18N, NotificationService)
 export class ShellViewModel {
 
   locale: string;
 
   private router: Router;
 
-  constructor(private i18n: I18N) {
+  constructor(
+    private i18n: I18N,
+    private notificationService: NotificationService) {
     this.locale = i18n.getLocale();
   }
 
@@ -24,5 +27,9 @@ export class ShellViewModel {
 
   updateLocale() {
     this.i18n.setLocale(this.locale);
+    this.notificationService.notify({
+      message: `Locale updated: ${this.locale}.`,
+      type: this.locale === 'en-US' ? 'warning' : 'info'
+    })
   }
 }
