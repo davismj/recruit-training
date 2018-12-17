@@ -3,7 +3,7 @@ import { Router, Redirect } from 'aurelia-router';
 import { ValidationController, ValidationControllerFactory } from 'aurelia-validation';
 import { ClockService } from 'services/clock';
 import { ContactService } from 'services/contact';
-import { IContact, Contact } from 'models/contact';
+import { IContact, Contact, CONTACT_RULES } from 'models/contact';
 import { Timezone } from 'models/timezone';
 
 @inject(ContactService, Router, ValidationControllerFactory, ClockService)
@@ -21,11 +21,11 @@ export class ContactListViewModel {
 
   async canActivate({ id }) {
     if (id === 'new') {
-      this.contact = new Contact({ id: null, name: '' });
+      this.contact = { id: undefined, name: '' };
     } else if (id) {
       const contact = await this.contactService.getContact(id);
       if (contact) {
-        this.contact = new Contact(contact);
+        this.contact = { id: contact.id, ...contact };
       } else {
         return new Redirect('contact');
       }
@@ -34,7 +34,7 @@ export class ContactListViewModel {
     }
     if (this.contact) {
       this.validation = this.validationFactory.createForCurrentScope();
-      this.validation.addObject(this.contact);
+      this.validation.addObject(this.contact, CONTACT_RULES);
     }
     return true;
   }
@@ -46,8 +46,7 @@ export class ContactListViewModel {
   async save() {
     const { valid } = await this.validation.validate();
     if (valid) {
-      const { id, name, phone, email, birthday, place, timezone } = this.contact;
-      this.contactService.saveContact({ id, name, phone, email, birthday, place, timezone });
+      this.contactService.saveContact(this.contact);
       this.router.navigateToRoute('contact-list');
     }
   }

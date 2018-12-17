@@ -2,6 +2,9 @@ import { ValidationRules } from 'aurelia-validation';
 import { ILocation } from 'models/location';
 import { Timezone } from 'models/timezone';
 
+const INDEX = new Map();
+const ID = new WeakMap();
+
 export interface IContact {
   id: number,
   name: string,
@@ -13,7 +16,7 @@ export interface IContact {
 }
 
 export class Contact implements IContact {
-  id: number;
+
   name: string;
   email?: string;
   phone?: string;
@@ -21,14 +24,26 @@ export class Contact implements IContact {
   place?: ILocation;
   timezone?: Timezone;
 
-  constructor({ id, name, email, phone, birthday, place, timezone }: IContact) {
-    Object.assign(this, { id, name, email, phone, birthday, place, timezone });
+  constructor({ id, ...obj }: IContact) {
+    let contact = INDEX.get(id);
+    if (!contact) {
+      ID.set(this, id);
+      INDEX.set(id, this);
+      contact = this;
+    }
+    return Object.assign(contact, obj);
+  }
+
+  get id(): number {
+    return ID.get(this);
+  }
+
+  dispose() {
+    INDEX.delete(this.id);
   }
 }
 
-ValidationRules
-  .ensure((contact: IContact) => contact.id)
-    .satisfies((id) => typeof(id) === 'number')
+export const CONTACT_RULES = ValidationRules
   .ensure((contact: IContact) => contact.name)
     .displayName('contact.NAME')
     .required()
@@ -49,4 +64,5 @@ ValidationRules
   .ensureObject()
     .satisfies((contact: IContact) => !!contact.phone || !!contact.email)
     .withMessage('contact.MUST_PROVIDE_PHONE_OR_EMAIL')
-  .on(Contact);
+  .on(Contact)
+  .rules;
