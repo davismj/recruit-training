@@ -9,14 +9,15 @@
     width: 20vw;
     padding: 1rem;
     font-size: 1.2rem;
-    animation: 0.25s linear forwards reverse fade-out, 1s linear 3s forwards fade-out, 0.25s ease-in-out 4s forwards collapse;
+    visibility: visible;
+    animation: fade-out 0.25s linear reverse forwards, fade-out 1s linear 3s forwards, collapse 0.25s ease-in-out 4s forwards, hide 0s 4.25s forwards;
 
     &:not(:hover) {
-      animation: 1s linear 3s forwards fade-out, 0.25s ease-in-out 4s forwards collapse;
+      animation: fade-out 1s linear 3s forwards, collapse 0.25s ease-in-out 4s forwards, hide 0s 4.25s forwards;
     }
 
     &.dismissed {
-      animation: 0.5s linear forwards fade-out, 0.25s ease-in-out 0.5s forwards collapse;
+      animation: fade-out 0.5s linear forwards, collapse 0.25s ease-in-out 0.5s forwards, hide 0s 0.75s forwards;
     }
 
     &:not(.dismissed):hover {
@@ -86,6 +87,15 @@
     height: 0;
     padding: 0;
     margin: 0;
+    border: 0;
   }
 }
 
+@keyframes hide {
+  from {
+    visibility: visible;
+  }
+  to {
+    visibility: hidden;
+  }
+}

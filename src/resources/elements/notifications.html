@@ -1,6 +1,5 @@
 <template class="notifications-element">
-  <div repeat.for="notification of notifier.notifications" class="notification alert alert-${notification.type} ${dismissed ? 'dismissed' : ''}"
-    animationend.trigger="animationend($event)">
+  <div repeat.for="notification of notifier.notifications" class="notification alert alert-${notification.type} ${dismissed ? 'dismissed' : ''}">
     <div class="dismiss-button" click.delegate="notification.read() || (dismissed = true)">
       <span class="bl-tr"></span>
       <span class="tl-br"></span>
