@@ -50,7 +50,15 @@
           </label>
         </collapse>
         <collapse heading="${'contact-list.OTHER_INFORMATION' & t}">
-          <leaflet-map></leaflet-map>
+          <div class="form-inline d-flex">
+            <span class="flex-grow-1">Current Time: ${clockService.clock | localDateTime: contact.timezone}</span>
+            <select class="form-control" value.bind="contact.timezone">
+              <option model.bind="undefined">Local</option>
+              <option repeat.for="timezone of timezones" model.bind="timezone">
+                ${timezone.code}
+              </option>
+            </select>
+          </div>
           <leaflet-map class="mt-3" click.delegate="updateLocation($event.detail.latlng)">
             <leaflet-marker if.bind="contact.place"
               lat.bind="contact.place.lat" lng.bind="contact.place.lng"

@@ -1,5 +1,6 @@
 import { ValidationRules } from 'aurelia-validation';
 import { ILocation } from 'models/location';
+import { Timezone } from 'models/timezone';
 
 export interface IContact {
   id: number,
@@ -8,6 +9,7 @@ export interface IContact {
   phone?: string,
   birthday?: Date,
   place?: ILocation;
+  timezone?: Timezone;
 }
 
 export class Contact implements IContact {
@@ -17,9 +19,10 @@ export class Contact implements IContact {
   phone?: string;
   birthday?: Date;
   place?: ILocation;
+  timezone?: Timezone;
 
-  constructor({ id, name, email, phone, birthday, place }: IContact) {
-    Object.assign(this, { id, name, email, phone, birthday, place });
+  constructor({ id, name, email, phone, birthday, place, timezone }: IContact) {
+    Object.assign(this, { id, name, email, phone, birthday, place, timezone });
   }
 }
 

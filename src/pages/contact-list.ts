@@ -1,19 +1,23 @@
 import { inject } from 'aurelia-framework';
 import { Router, Redirect } from 'aurelia-router';
 import { ValidationController, ValidationControllerFactory } from 'aurelia-validation';
+import { ClockService } from 'services/clock';
 import { ContactService } from 'services/contact';
 import { IContact, Contact } from 'models/contact';
+import { Timezone } from 'models/timezone';
 
-@inject(ContactService, Router, ValidationControllerFactory, ClockService, TimezoneService)
+@inject(ContactService, Router, ValidationControllerFactory, ClockService)
 export class ContactListViewModel {
 
   contact: IContact = null;
   validation: ValidationController;
+  timezones = Timezone.Timezones;
 
   constructor(
     private contactService: ContactService,
     private router: Router,
-    private validationFactory: ValidationControllerFactory) { }
+    private validationFactory: ValidationControllerFactory,
+    private clockService: ClockService) { }
 
   async canActivate({ id }) {
     if (id === 'new') {
@@ -42,8 +46,8 @@ export class ContactListViewModel {
   async save() {
     const { valid } = await this.validation.validate();
     if (valid) {
-      const { id, name, phone, email, birthday, place } = this.contact;
-      this.contactService.saveContact({ id, name, phone, email, birthday, place });
+      const { id, name, phone, email, birthday, place, timezone } = this.contact;
+      this.contactService.saveContact({ id, name, phone, email, birthday, place, timezone });
       this.router.navigateToRoute('contact-list');
     }
   }
