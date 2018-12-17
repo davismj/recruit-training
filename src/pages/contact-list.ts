@@ -4,7 +4,7 @@ import { ValidationController, ValidationControllerFactory } from 'aurelia-valid
 import { ContactService } from 'services/contact';
 import { IContact, Contact } from 'models/contact';
 
-@inject(ContactService, Router, ValidationControllerFactory)
+@inject(ContactService, Router, ValidationControllerFactory, ClockService, TimezoneService)
 export class ContactListViewModel {
 
   contact: IContact = null;
@@ -17,14 +17,13 @@ export class ContactListViewModel {
 
   async canActivate({ id }) {
     if (id === 'new') {
-      this.contact = new Contact({ id: null, name: '', phone: '', email: '', birthday: null });
+      this.contact = new Contact({ id: null, name: '' });
     } else if (id) {
       const contact = await this.contactService.getContact(id);
       if (contact) {
-        const { id, name, phone, email, birthday } = contact;
-        this.contact = new Contact({ id, name, phone, email, birthday });
+        this.contact = new Contact(contact);
       } else {
-        return new Redirect('contact')
+        return new Redirect('contact');
       }
     } else {
       this.contact = null;
@@ -43,10 +42,18 @@ export class ContactListViewModel {
   async save() {
     const { valid } = await this.validation.validate();
     if (valid) {
-      const { id, name, phone, email, birthday } = this.contact;
-      this.contactService.saveContact({ id, name, phone, email, birthday });
+      const { id, name, phone, email, birthday, place } = this.contact;
+      this.contactService.saveContact({ id, name, phone, email, birthday, place });
       this.router.navigateToRoute('contact-list');
     }
+  }
+
+  updateLocation({ lat, lng }) {
+    this.contact.place = { lat, lng };
+  }
+
+  removeLocation() {
+    this.contact.place = null;
   }
 
   remove(contact: IContact) {

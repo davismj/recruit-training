@@ -51,6 +51,14 @@
         </collapse>
         <collapse heading="${'contact-list.OTHER_INFORMATION' & t}">
           <leaflet-map></leaflet-map>
+          <leaflet-map class="mt-3" click.delegate="updateLocation($event.detail.latlng)">
+            <leaflet-marker if.bind="contact.place"
+              lat.bind="contact.place.lat" lng.bind="contact.place.lng"
+              dblclick.delegate="removeLocation()">
+            </leaflet-marker>
+          </leaflet-map>
+          <div>Click to set the location.</div>
+          <div>Double click a marker to remove the location.</div>
         </collapse>
       </div>
       <div class="d-flex mt-2">

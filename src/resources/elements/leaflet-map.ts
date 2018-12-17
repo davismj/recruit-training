@@ -7,7 +7,7 @@ import { dispatch } from 'utils/dispatch';
 const DISTANCE_TOLERANCE = 0.001;
 
 @inject(DOM.Element)
-@inlineView('<template class="leaflet-element"><slot></slot></template>')
+@inlineView('<template class="leaflet-element"><div class="leaflet-map"></div><slot></slot></template>')
 export class LeafletMapCustomElement {
 
   @bindable({ defaultBindingMode: bindingMode.twoWay, changeHandler: 'centerChanged' }) lat = 43.06853827090299;
@@ -22,9 +22,26 @@ export class LeafletMapCustomElement {
 
   constructor(private element: HTMLElement) { }
 
-  attached() {
+  /**
+   * Adds a marker to the map.
+   * @param {L.Marker} marker A leaflet marker.
+   */
+  addMarker(marker: L.Marker) {
+    marker.addTo(this.map);
+  }
+
+  /**
+   * Removes a marker from the map.
+   * @param {L.Marker} marker A leaflet marker.
+   */
+  removeMarker(marker: L.Marker) {
+    marker.removeFrom(this.map);
+  }
+
+  private attached() {
     const { lat, lng, zoom, inertia, showZoomControl } = this;
-    const map = this.map = L.map(this.element, { center: [lat, lng], zoom, inertia, zoomControl: showZoomControl });
+    const element = this.element.querySelector('.leaflet-map');
+    const map = this.map = L.map(element, { center: [lat, lng], zoom, inertia, zoomControl: showZoomControl });
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
@@ -40,7 +57,11 @@ export class LeafletMapCustomElement {
         this.lng = center.lng;
       }
     });
-    map.on('moveend zoomend', (event) => dispatch(this.element, event.type, this.map));
+    map.on('moveend zoomend click', (event) => dispatch(this.element, event.type, event));
+  }
+
+  private detached()  {
+    this.map.remove();
   }
 
   private centerChanged() {

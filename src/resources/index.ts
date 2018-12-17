@@ -5,6 +5,7 @@ export function configure(config: FrameworkConfiguration) {
     PLATFORM.moduleName('./elements/collapse'),
     PLATFORM.moduleName('./elements/collapse-group'),
     PLATFORM.moduleName('./elements/leaflet-map'),
+    PLATFORM.moduleName('./elements/leaflet-marker'),
     PLATFORM.moduleName('./value-converters/date'),
     PLATFORM.moduleName('./value-converters/number')
   ]);

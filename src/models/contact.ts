@@ -1,11 +1,13 @@
 import { ValidationRules } from 'aurelia-validation';
+import { ILocation } from 'models/location';
 
 export interface IContact {
   id: number,
   name: string,
   email?: string,
   phone?: string,
-  birthday?: Date
+  birthday?: Date,
+  place?: ILocation;
 }
 
 export class Contact implements IContact {
@@ -14,9 +16,10 @@ export class Contact implements IContact {
   email?: string;
   phone?: string;
   birthday?: Date;
+  place?: ILocation;
 
-  constructor({ id, name, email, phone, birthday }: IContact) {
-    Object.assign(this, { id, name, email, phone, birthday });
+  constructor({ id, name, email, phone, birthday, place }: IContact) {
+    Object.assign(this, { id, name, email, phone, birthday, place });
   }
 }
 
