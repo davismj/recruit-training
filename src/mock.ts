@@ -1,3 +1,5 @@
+const TIMEOUT = 500;
+
 let id = 0;
 const c1 = {
   id: id++,
@@ -58,7 +60,7 @@ const handle = function handle(method, url, data?) {
         break;
       }
     }
-    setTimeout(() => resolve({ json: () => Promise.resolve(result) }), 500);
+    setTimeout(() => resolve({ json: () => Promise.resolve(result) }), TIMEOUT);
   });
 }
 
@@ -72,4 +74,5 @@ export class MockHttpClient {
   delete(url) {
     return handle('delete', url);
   }
+  configure(fn) { }
 }
