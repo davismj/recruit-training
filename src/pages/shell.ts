@@ -25,6 +25,8 @@ export class ShellViewModel {
       { route: '', redirect: 'contact' },
       { route: 'contact', moduleId: PLATFORM.moduleName('pages/contact-list'), name: 'contact-list', title: 'shell.CONTACT_LIST', nav: true },
       { route: 'contact/:id', moduleId: PLATFORM.moduleName('pages/contact-list'), name: 'contact-detail' },
+
+      { route: 'login', redirect: 'contact' }
     ]);
   }
 

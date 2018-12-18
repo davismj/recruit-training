@@ -6,10 +6,13 @@ const sameOrigin = function sameOrigin(request: Request): boolean {
   return location && request.url.match(location.origin) !== null;
 }
 
-const decode = function decode(jwt) {
+const decode = function decode(jwt): IClaims {
   const [, payload, ] = jwt.split('.');
   return JSON.parse(atob(payload));
 }
+
+const LOGIN_TIMEOUT = 30;
+let resolveLoginPromise: (IClaims) => void = null;
 
 @inject(HttpClient)
 export class AuthService {
@@ -30,9 +33,16 @@ export class AuthService {
     });
   }
 
-  async login(): Promise<void> {
+  async login(): Promise<IClaims> {
     await Promise.resolve(this.session ? this.logout() : null);
     window.open('/api/oauth/google');
+    return await new Promise<IClaims>((resolve, reject) => {
+      resolveLoginPromise = resolve;
+      setTimeout(() => {
+        resolveLoginPromise = null;
+        reject(`No response after ${LOGIN_TIMEOUT} seconds.`);
+      }, LOGIN_TIMEOUT * 1000);
+    });
   }
 
   async logout(): Promise<void> {
@@ -43,6 +53,9 @@ export class AuthService {
   private signin(jwt) {
     this.session = decode(jwt);
     this.jwt = jwt;
+    if (resolveLoginPromise) {
+      resolveLoginPromise(this.session);
+    }
   }
 
   private signout() {

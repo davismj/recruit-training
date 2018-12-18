@@ -1,13 +1,14 @@
 import {Aurelia} from 'aurelia-framework'
-import environment from './environment';
-import {PLATFORM} from 'aurelia-pal';
-import { MockHttpClient } from './mock';
 import { HttpClient } from 'aurelia-fetch-client';
 import { TCustomAttribute } from 'aurelia-i18n';
 import * as Backend from 'i18next-xhr-backend';
+import {PLATFORM} from 'aurelia-pal';
+import environment from './environment';
+import { MockHttpClient } from './mock';
+import { AuthService } from 'services/auth';
 import 'main.scss';
 
-export function configure(aurelia: Aurelia) {
+export async function configure(aurelia: Aurelia) {
   aurelia.use
     .standardConfiguration()
     .feature(PLATFORM.moduleName('resources/index'))
@@ -38,5 +39,9 @@ export function configure(aurelia: Aurelia) {
     aurelia.use.plugin(PLATFORM.moduleName('aurelia-testing'));
   }
 
-  return aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('pages/shell')));
+  await aurelia.start();
+
+  const auth = aurelia.container.get(AuthService);
+  const root = auth.session ? PLATFORM.moduleName('pages/shell') : PLATFORM.moduleName('pages/public');
+  await aurelia.setRoot(root);
 }
