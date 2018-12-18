@@ -1,9 +1,10 @@
-import { inject, PLATFORM } from 'aurelia-framework';
+import { inject, PLATFORM, Aurelia } from 'aurelia-framework';
 import { RouterConfiguration, Router } from 'aurelia-router';
 import { I18N } from 'aurelia-i18n';
 import { NotificationService } from 'services/notification';
+import { AuthService } from 'services/auth';
 
-@inject(I18N, NotificationService)
+@inject(I18N, NotificationService, AuthService, Aurelia)
 export class ShellViewModel {
 
   locale: string;
@@ -12,7 +13,9 @@ export class ShellViewModel {
 
   constructor(
     private i18n: I18N,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    private authService: AuthService,
+    private aurelia: Aurelia) {
     this.locale = i18n.getLocale();
   }
 
@@ -31,5 +34,10 @@ export class ShellViewModel {
       message: `Locale updated: ${this.locale}.`,
       type: this.locale === 'en-US' ? 'warning' : 'info'
     })
+  }
+
+  async logout() {
+    await this.authService.logout();
+    this.aurelia.setRoot(PLATFORM.moduleName('pages/public'));
   }
 }

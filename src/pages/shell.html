@@ -8,6 +8,8 @@
         </li>
       </ul>
       <form class="form-inline mr-2">
+        <span>${authService.session.name}</span>
+        <button click.delegate="logout()">Logout</button>
         <select class="form-control" value.bind="locale" change.delegate="updateLocale()">
           <option value="jp-JP">日本語</option>
           <option value="en-US">English</option>
