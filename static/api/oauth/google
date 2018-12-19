@@ -2,20 +2,31 @@
 <html>
   <head></head>
   <body>
-    <button id="accept">Accept</button>
+    <button id="user">Login as User</button>
+    <button id="admin">Login as Admin</button>
     <script>
       function encode(obj) {
         return btoa(JSON.stringify(obj))
       }
-      var button = document.getElementById('accept');
-      button.addEventListener('click', function() {
-        var claims = {
-          name: "Matthew James Davis"
+      function handlerFor(claims) {
+        return function() {
+          var jwt = [encode('abc'), encode(claims), encode('def')].join('.');
+          window.opener.postMessage({ type: 'signin', data: jwt }, 'http://localhost:8080');
+          window.close();
         }
-        var jwt = [encode('abc'), encode(claims), encode('def')].join('.');
-        window.opener.postMessage({ type: 'signin', data: jwt }, 'http://localhost:8080');
-        window.close();
-      });
+      }
+      var user = {
+        name: "John Doe",
+        permissions: 1
+      }
+      var admin = {
+        name: "Yamada Taro",
+        permissions: 3
+      }
+      var button1 = document.getElementById('user');
+      var button2 = document.getElementById('admin');
+      button1.addEventListener('click', handlerFor(user));
+      button2.addEventListener('click', handlerFor(admin));
     </script>
   </body>
 </html>

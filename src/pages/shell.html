@@ -18,6 +18,13 @@
       <notification-list></notification-list>
     </nav>
   </section>
-  <router-view></router-view>
+  <div>
+    parent
+    <router-view name="parent"></router-view>
+  </div>
+  <div>child
+
+    <router-view name="child"></router-view>
+  </div>
   <notifications class="bottom-right-fixed-notifications"></notifications>
 </template>

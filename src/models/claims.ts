@@ -1,3 +1,7 @@
+export const Permissions = {
+  ViewContacts: 2 ** 0,
+  EditContacts: 2 ** 1
+}
 
 export interface IClaims {
   sub?: string;
@@ -20,5 +24,6 @@ export interface IClaims {
   phone_number_verified?: string;
   address?: string;
   updated_at?: string;
-  [key: string]: string;
+  permissions: number;
+  [key: string]: string | number;
 }
