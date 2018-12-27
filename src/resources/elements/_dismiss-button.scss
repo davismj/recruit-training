@@ -1,0 +1,28 @@
+.dismiss-button-element {
+  position: relative;
+
+  .dismiss-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    height: 1rem;
+    width: 1rem;
+    cursor: pointer;
+
+    > .bl-tr,
+    > .tl-br {
+      position: absolute;
+      left: calc(0.5rem - 1px);
+      height: 1rem;
+      width: 2px;
+      background: currentColor;
+    }
+
+    > .bl-tr {
+      transform: rotate(45deg);
+    }
+    > .tl-br {
+      transform: rotate(-45deg);
+    }
+  }
+}

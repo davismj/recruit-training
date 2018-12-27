@@ -1,0 +1,24 @@
+<template>
+  <section id="shell-page">
+    <nav class="navbar navbar-light bg-light row mb-4">
+      <a class="navbar-brand">${'shell.CONTACT_MANAGER' & t}</a>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" repeat.for="route of router.navigation">
+          <a class="nav-link" href="${route.href}" click.delegate="doSomething()">${route.title & t}</a>
+        </li>
+      </ul>
+      <form class="form-inline">
+        <button class="btn mr-2" click.delegate="logout()">
+          Logout ${authService.session.name}
+        </button>
+        <notification-list class="mr-2"></notification-list>
+        <select class="form-control" value.bind="locale" change.delegate="updateLocale()">
+          <option value="ja-JP">日本語</option>
+          <option value="en-US">English</option>
+        </select>
+      </form>
+    </nav>
+    <router-view></router-view>
+    <notifications style="position: fixed; bottom: 1vh; right: 1vw;"></notifications>
+  </section>
+</template>

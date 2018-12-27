@@ -1,0 +1,77 @@
+<template>
+  <require from="resources/elements/leaflet-map"></require>
+  <require from="resources/elements/leaflet-marker"></require>
+  <section id="contact-list-page" class="row">
+    <div class="list-group col-md-4">
+      <a repeat.for="contact of contactService.contacts"
+         class="contact-list-items list-group-item d-flex ${contact.id === $parent.contact.id ? 'active' : ''}"
+         route-href="route: contact-detail; params.bind: { id: contact.id }">
+        <span>${contact.name}</span>
+      </a>
+      <a class="list-group-item bg-success text-white"
+         route-href="route: contact-detail; params.bind: { id: 'new' }">
+        ${'contact-list.ADD_NEW_CONTACT' & t}
+      </a>
+    </div>
+    <form class="col-md-8" if.bind="contact" change.delegate="validation.revalidateErrors()" submit.delegate="save($event)">
+      <div class="alert alert-danger" role="alert" if.bind="validation.errors.length">
+        <p>Please correct the following errors:</p>
+        <ul>
+          <li repeat.for="error of validation.errors">${error.message & t: { $value: error.object[error.propertyName] } }</li>
+        </ul>
+      </div>
+      <label class="form-group" validation-errors.bind="nameErrors">
+        <span>${'contact.NAME' & t}</span>
+        <input class="form-control ${!nameErrors.length ? '' : 'is-invalid'}" type="text" value.bind="contact.name & validate" />
+        <div class="invalid-feedback" if.bind="nameErrors.length">
+          <p repeat.for="info of nameErrors">${info.error.message & t}</p>
+        </div>
+      </label>
+      <label class="form-group" validation-errors.bind="phoneErrors">
+        <span>${'contact.PHONE_NUMBER' & t}</span>
+        <input class="form-control ${!phoneErrors.length ? '' : 'is-invalid'}" type="text" value.bind="contact.phone & validate" />
+        <div class="invalid-feedback" if.bind="phoneErrors.length">
+          <p repeat.for="info of phoneErrors">${info.error.message & t}</p>
+        </div>
+      </label>
+      <label class="form-group" validation-errors.bind="emailErrors">
+        <span>${'contact.EMAIL_ADDRESS' & t}</span>
+        <input class="form-control ${!emailErrors.length ? '' : 'is-invalid'}" type="text" value.bind="contact.email & validate" />
+        <div class="invalid-feedback" if.bind="emailErrors.length">
+          <p repeat.for="info of emailErrors">${info.error.message & t: { $value: contact.email } }</p>
+        </div>
+      </label>
+
+      <collapse class="mb-2" heading="Other Information" collapsed.bind="otherInfoCollapsed">
+        <label class="form-group" validation-errors.bind="bdErrors">
+          <span>${'contact.BIRTHDAY' & t}</span>
+          <input class="form-control ${!bdErrors.length ? '' : 'is-invalid'}" type="date" value.bind="contact.birthday | date & validate" />
+          <div class="invalid-feedback" if.bind="bdErrors.length">
+            <p repeat.for="info of bdErrors">${info.error.message & t }</p>
+          </div>
+        </label>
+      </collapse>
+
+      <collapse class="mb-2 d-flex" heading="Location Information">
+        <p>Current Time: ${clockService.clock | localDateTime: contact.timezone}</p>
+        <select class="form-control d-inline ml-auto" value.bind="contact.timezone">
+          <option model.bind="undefined">Local</option>
+          <option repeat.for="timezone of timezones" model.bind="timezone">
+            ${timezone.code}
+          </option>
+        </select>
+
+        <leaflet-map click.trigger="setLocation($event.detail.latlng)">
+          <leaflet-marker if.bind="contact.place" lat.bind="contact.place.lat" lng.bind="contact.place.lng"
+                          dblclick.trigger="removeLocation()">
+          </leaflet-marker>
+        </leaflet-map>
+      </collapse>
+
+      <div class="d-flex">
+        <a class="btn btn-default ml-auto" route-href="contact-list">${'contact-list.CANCEL' & t}</a>
+        <button class="btn btn-primary" type="submit" disabled.bind="validation.errors.length">${'contact-list.SAVE' & t}</button>
+      </div>
+    </form>
+  </section>
+</template>

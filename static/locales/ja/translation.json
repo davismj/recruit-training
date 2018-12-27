@@ -1,0 +1,26 @@
+{
+  "shell": {
+    "CONTACT_MANAGER": "コンタクトセンター",
+    "CONTACT_LIST": "コンタクトリスト"
+  },
+  "contact-list": {
+    "ADD_NEW_CONTACT": "新しい連絡先を追加",
+    "PERSONAL_INFORMATION": "個人情報",
+    "OTHER_INFORMATION": "他の情報",
+    "CANCEL": "キャンセル",
+    "SAVE": "保存"
+  },
+  "validation": {
+    "PLEASE_CORRECT_THE_FOLLOWING_ERRORS": "以下のエラーを修正してください"
+  },
+  "contact": {
+    "NAME": "名前",
+    "PHONE_NUMBER": "電話番号",
+    "EMAIL_ADDRESS": "電子メールアドレス",
+    "BIRTHDAY": "誕生日",
+    "NAME_IS_REQUIRED": "名前は必要です",
+    "EMAIL_IS_INVALID": "\"{{ $value }}\"は有効なメールアドレスではありません",
+    "YOUR_PHONE_NUMBER_SHOULD_BE_IN_THE_FORMAT": "電話番号が000-0000-0000の形式であることを確認してください",
+    "MUST_PROVIDE_PHONE_OR_EMAIL": "電話番号かメールアドレスのどちらかが必要です"
+  }
+}

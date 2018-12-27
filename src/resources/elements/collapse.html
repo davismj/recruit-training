@@ -1,0 +1,18 @@
+<template class="collapse-element card ${isCollapsed ? 'collapsed' : 'expanded'}">
+  <div class="header-wrapper card-header" element.ref="header">
+    <div class="header" click.delegate="toggle()">
+      <slot name="header">
+        <span class="heading">${heading}</span>
+        <span class="icon">
+          <span class="horizontal-bar"></span>
+          <span class="vertical-bar"></span>
+        </span>
+      </slot>
+    </div>
+  </div>
+  <div class="content-wrapper card-body" element.ref="content">
+    <div class="content">
+      <slot></slot>
+    </div>
+  </div>
+</template>

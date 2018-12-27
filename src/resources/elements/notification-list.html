@@ -1,0 +1,10 @@
+<template class="notification-list-element" tabindex="-1" focusout.trigger="close()">
+  <div class="notification-count ${unreadNotifications.length > 0 ? 'bg-info' : 'bg-secondary'} text-white" click.delegate="toggle()">
+    ${unreadNotifications.length}
+  </div>
+  <div class="notification-list popover p-2" if.bind="isOpen && notificationService.notifications.length">
+    <div class="notification alert alert-${notification.isUnread ? notification.type : 'secondary'} m-0" repeat.for="notification of notificationService.notifications | unreadFirst">
+      ${notification.message}
+    </div>
+  </div>
+</template>

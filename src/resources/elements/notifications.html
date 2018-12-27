@@ -1,0 +1,6 @@
+<template class="notifications-element">
+  <div repeat.for="notification of notificationService.notifications" class="notification alert alert-${notification.type} ${dismissed ? 'dismissed' : ''}" style="position: relative;">
+    <dismiss-button style="position: absolute; top: 1em; right: 1em;" click.delegate="notification.read() || (dismissed = true)"></dismiss-button>
+    <div>${notification.message}</div>
+  </div>
+</template>
