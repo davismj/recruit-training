@@ -11,7 +11,7 @@ export class PublicViewModel {
       { route: 'login', name: 'login', moduleId: PLATFORM.moduleName('pages/login') },
     ])
     config.mapUnknownRoutes(PLATFORM.moduleName('pages/login'));
-    // config.options.root = '/';
-    // config.options.pushState = true;
+    config.options.root = '/';
+    config.options.pushState = true;
   }
 }

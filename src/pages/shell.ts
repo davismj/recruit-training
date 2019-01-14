@@ -74,10 +74,9 @@ class AuthorizeStep {
     const instructions = navigationInstruction.getAllInstructions();
 
     const required = instructions
+      .filter((instruction) => instruction.config.settings)
       .map((instruction) => instruction.config.settings.permissions)
       .reduce((current, newPermissions) => current | newPermissions, Permissions.None);
-
-    debugger;
 
     if (required !== Permissions.None) {
       const { permissions } = session || { permissions: Permissions.None };

@@ -39,11 +39,8 @@ export async function configure(aurelia: Aurelia) {
 
   const authService = aurelia.container.get(AuthService);
   const loggedIn = !!authService.session;
+  const root = loggedIn ? PLATFORM.moduleName('pages/shell') : PLATFORM.moduleName('pages/public');
 
   await aurelia.start();
-  const shell = aurelia.container.get('pages/shell');
-  aurelia.enhance({
-    value: 'a'
-  }, document.body)
-  );
+  await aurelia.setRoot(root);
 }
